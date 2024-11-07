@@ -10,9 +10,13 @@ const TipoAmbientes = () => {
   }, []);
 
   const fetchTipoAmbientes = async () => {
-    const response = await getTipoAmbientes();
-    setTipoAmbientes(response.data);
-  };
+    try {
+      const response = await getTipoAmbientes();
+      setTipoAmbientes(response.data.results); // Si estás usando paginación, verifica el nivel donde están los datos
+    } catch (error) {
+      console.error('Error al cargar ambientes:', error);
+    }
+  };;
 
   return (
     <div className="min-h-screen p-6 bg-gray-100">

@@ -5,18 +5,26 @@ import { useRouter } from 'next/router';
 const CreateTipoAmbiente = () => {
   const [form, setForm] = useState({ nombre: '', descripcion: '' });
   const router = useRouter();
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await createTipoAmbiente(form);  // Llama a la API para crear un nuevo tipo de ambiente
-    router.push('/tipoAmbientes');  // Redirige a la página de listar
-  };
+    try {
+        await createTipoAmbiente(form);  // Realiza la solicitud para crear un nuevo tipo de ambiente
+        router.push('/tipoAmbientes');  // Redirige a la lista
+    } catch (error) {
+        console.error('Error al crear tipo de ambiente:', error);
+        setError('Hubo un problema al crear el tipo de ambiente. Inténtalo nuevamente.');
+    }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">Crear un nuevo Tipo de Ambiente</h1>
         
+        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Nombre */}
           <div>
@@ -60,3 +68,4 @@ const CreateTipoAmbiente = () => {
 };
 
 export default CreateTipoAmbiente;
+

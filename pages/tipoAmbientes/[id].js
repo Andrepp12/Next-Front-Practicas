@@ -15,20 +15,32 @@ const TipoAmbienteDetails = () => {
   }, [id]);
 
   const fetchTipoAmbiente = async () => {
-    const response = await getTipoAmbienteById(id);
-    setForm(response.data);
-    setIsLoading(false);
+    try {
+      const response = await getTipoAmbienteById(id);
+      setForm(response.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.error('Error al obtener el tipo de ambiente:', error);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await updateTipoAmbiente(id, form);  // Actualiza el tipo de ambiente
-    router.push('/tipoAmbientes');  // Redirige a la lista de tipos de ambientes
+    try {
+      await updateTipoAmbiente(id, form);  // Actualiza el tipo de ambiente
+      router.push('/tipoAmbientes');  // Redirige a la lista de tipos de ambientes
+    } catch (error) {
+      console.error('Error al actualizar el tipo de ambiente:', error);
+    }
   };
 
   const handleDelete = async () => {
-    await deleteTipoAmbiente(id);  // Elimina el tipo de ambiente
-    router.push('/tipoAmbientes');  // Redirige a la lista después de eliminar
+    try {
+      await deleteTipoAmbiente(id);  // Elimina el tipo de ambiente
+      router.push('/tipoAmbientes');  // Redirige a la lista después de eliminar
+    } catch (error) {
+      console.error('Error al eliminar el tipo de ambiente:', error);
+    }
   };
 
   if (isLoading) {
@@ -93,4 +105,3 @@ const TipoAmbienteDetails = () => {
 };
 
 export default TipoAmbienteDetails;
-

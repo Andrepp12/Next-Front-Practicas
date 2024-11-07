@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { getAmbientes } from '../../api/ambienteApi';  // Ruta relativa correcta
+import ProtectedRoute from '../../utils/protectedRoute';
+import { getAmbientes } from '../../api/ambienteApi'; // Ajusta la ruta
 import Link from 'next/link';
 
 const Ambientes = () => {
@@ -10,11 +11,16 @@ const Ambientes = () => {
   }, []);
 
   const fetchAmbientes = async () => {
-    const response = await getAmbientes();
-    setAmbientes(response.data);
+    try {
+      const response = await getAmbientes();
+      setAmbientes(response.data.results); // Si estás usando paginación, verifica el nivel donde están los datos
+    } catch (error) {
+      console.error('Error al cargar ambientes:', error);
+    }
   };
 
   return (
+    <ProtectedRoute>
     <div className="min-h-screen p-6 bg-gray-100">
       <h1 className="text-3xl font-bold mb-4 text-center text-gray-800">Lista de Ambientes</h1>
 
@@ -53,9 +59,11 @@ const Ambientes = () => {
         </table>
       </div>
     </div>
+    </ProtectedRoute>
   );
 };
 
 export default Ambientes;
+
 
 

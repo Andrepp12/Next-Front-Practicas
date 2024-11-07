@@ -1,28 +1,27 @@
-import axios from 'axios';
+import axiosInstance from '../utils/axiosInstance';
 
-const API_URL = 'http://localhost:8000/api/tipo-ambiente';
-
-// Obtener todos los tipos de ambientes
+// Obtener todos los ambientes
 export const getTipoAmbientes = async () => {
-  return await axios.get(`${API_URL}/`);
+  return await axiosInstance.get('recursos/tipo-ambiente/');
 };
 
-// Obtener un tipo de ambiente por ID
+// Obtener un ambiente por ID
 export const getTipoAmbienteById = async (id) => {
-  return await axios.get(`${API_URL}/${id}/`);
+  return await axiosInstance.get(`recursos/tipo-ambiente/${id}/`);
 };
 
-// Crear un nuevo tipo de ambiente
+// Crear un nuevo ambiente
 export const createTipoAmbiente = async (data) => {
-  return await axios.post(`${API_URL}/`, data);
+  return await axiosInstance.post('recursos/tipo-ambiente/', data);
 };
 
-// Actualizar un tipo de ambiente existente
+// Actualizar un ambiente existente
 export const updateTipoAmbiente = async (id, data) => {
-  return await axios.put(`${API_URL}/${id}/`, data);
+  return await axiosInstance.put(`recursos/tipo-ambiente/${id}/`, data);
 };
 
-// Eliminar un tipo de ambiente
+// Eliminar un ambiente
 export const deleteTipoAmbiente = async (id) => {
-  return await axios.delete(`${API_URL}/${id}/`);
+  return await axiosInstance.delete(`recursos/tipo-ambiente/${id}/`);
 };
+
